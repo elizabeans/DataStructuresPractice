@@ -8,17 +8,20 @@ namespace DataStructures
     public class MyStack<T> : IMyStack<T>
     {
         private T[] _data;
+        private int _size;
         public int Count { get; private set; }
 
         public MyStack()
         {
-            _data = new T[1000];
+            _size = 1000;
+            _data = new T[_size];
             Count = 0;
         }
 
         public MyStack(int capacity)
         {
-            _data = new T[capacity];
+            _size = capacity;
+            _data = new T[_size];
             Count = 0;
         }
 
@@ -29,7 +32,7 @@ namespace DataStructures
 
         public bool IsFull()
         {
-            
+            return Count == _size;
         }
 
         public void Push(T item)
@@ -38,6 +41,12 @@ namespace DataStructures
             {
                 throw new ArgumentNullException();
             }
+
+            if (IsFull())
+            {
+                throw new InvalidOperationException();
+            }
+
             _data[Count++] = item;
         }
 
@@ -69,7 +78,7 @@ namespace DataStructures
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            return _data.Contains(item);
         }
 
         public void Clear()
